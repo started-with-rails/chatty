@@ -1,0 +1,47 @@
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">
+				<img id="profile-img" src="https://www.gravatar.com/avatar/<%=current_user.try(:id)%>?s=32&d=identicon&r=PG&f=1" class="online" alt="" />
+				<p>Mike Ross</p>
+			</div>
+		</div>
+		<div id="search">
+			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+			<input type="text" placeholder="Search contacts..." />
+		</div>
+		<div id="contacts">
+            <ul id="chat-rooms">
+                <%@rooms.each do |room|%>
+                    <%= render 'room', room: room %>
+                <%end%>
+            </ul>
+		</div>
+		<div id="bottom-bar">
+            <%= render 'form', room: current_user.rooms.build %>
+		</div>
+	</div>
+	<div class="content">
+        <div id="room-id" data-room-id="<%= @room.try(:id) %>"></div>
+        <div id="user-id" data-user-id="<%= current_user.id %>"></div>
+		<div class="contact-profile">
+			<img src="https://www.gravatar.com/avatar/<%=@room.try(:id)%>?s=32&d=identicon&r=PG&f=1" alt="" />
+			<p><%=@room.try(:name)%></p>
+		</div>
+		<div class="messages">
+            <ul>
+                 <div id="chat-messages">
+                    <% @messages.each do |message|%>
+                        <%=render 'messages/message', message: message%>
+                    <%end%>
+                </div>
+
+            </ul>
+		</div>
+		<div class="message-input">
+			<div class="wrap">
+                  <%= render 'messages/form', message: Message.new, room: @room %>
+			</div>
+		</div>
+	</div>
+</div>

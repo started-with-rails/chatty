@@ -1,0 +1,12 @@
+ <%= link_to room do %>
+    <li class="contact">
+        <div class="wrap">
+            <%# <span class="contact-status online"></span> %>
+            <img src="https://www.gravatar.com/avatar/<%=room.id%>?s=32&d=identicon&r=PG&f=1" alt="<%=room.name%>" />
+            <div class="meta">
+                <p class="name"><%=room.name%></p>
+                <%# <p class="preview">You just got LITT up, Mike.</p> %>
+            </div>
+        </div>
+    </li>
+<%end%>    
