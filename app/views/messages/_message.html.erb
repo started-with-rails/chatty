@@ -1,5 +1,4 @@
 
-<li class="<%#=get_class(message)%>">
-    <img src="https://www.gravatar.com/avatar/<%=message.user.try(:id)%>?s=32&d=identicon&r=PG&f=1" alt="" />
-    <p><%=message.content%></p>
-</li>
+<%=get_random_image(message.user)%>
+<p><strong><%=message.content%></strong></p>
+

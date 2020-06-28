@@ -4,10 +4,11 @@ class MessageJob < ApplicationJob
 
   def perform(message)
     html = ApplicationController.render(
-      partial: 'messages/message',
+      partial: 'messages/send',
       locals: { message: message }
     )
     cable_ready["room_channel_#{message.room_id}"].insert_adjacent_html(
+      user_id: message.user_id,
       selector: "#chat-messages",
       position: "beforeend",
       html: html

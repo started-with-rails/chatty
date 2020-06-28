@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable
   has_many :rooms, class_name: "Room", foreign_key: "owner_id"
   has_many :messages
+  validates :email,:password, presence: true
 end

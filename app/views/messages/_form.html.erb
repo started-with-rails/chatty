@@ -1,8 +1,6 @@
 <%= form_with model: message, local: true, class: "form-inline"  do |form| %>
-  <div class="form-group mb-2">
-     <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." %>
+     <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." ,style: 'height: 50px'%>
      <%= form.hidden_field :room_id, value: room.try(:id) %>
-  </div>
     <%=button_tag type: 'submit', class: "btn btn-primary mb-2" do %>
     <i class="fa fa-paper-plane" aria-hidden="true"></i>
     <%end%>

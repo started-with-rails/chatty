@@ -17,3 +17,4 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+import "controllers"

@@ -6,6 +6,7 @@ document.addEventListener('turbolinks:load', () => {
   const room_id = room_element.getAttribute('data-room-id');
 
   consumer.subscriptions.subscriptions.forEach((subscription) => {
+    if(JSON.parse(subscription.identifier).channel == 'MessageChannel')
     consumer.subscriptions.remove(subscription)
   })
 
@@ -17,7 +18,13 @@ document.addEventListener('turbolinks:load', () => {
     },
 
     received (data) {
-      if (data.cableReady) CableReady.perform(data.operations)
+      const message = data.operations.insertAdjacentHtml[0];
+      const user = document.getElementById('user-id');
+      const current_user = parseInt(user.getAttribute('data-user-id'));
+      let sender = (message.userId == current_user) 
+      if (data.cableReady && !sender) {
+        CableReady.perform(data.operations)
+      }
     }
   })
 })

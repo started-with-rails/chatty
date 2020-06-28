@@ -2,13 +2,16 @@
 	<div id="sidepanel">
 		<div id="profile">
 			<div class="wrap">
-				<img id="profile-img" src="https://www.gravatar.com/avatar/<%=current_user.try(:id)%>?s=32&d=identicon&r=PG&f=1" class="online" alt="" />
-				<p>Mike Ross</p>
+				<%= get_random_image(current_user)%>
+				<p><%=current_user.try(:email)%></p>
+				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+				<div id="expanded">
+					<p><%=link_to 'Sign out', destroy_user_session_path, :method => :delete %></p>
+				</div>
 			</div>
 		</div>
 		<div id="search">
-			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-			<input type="text" placeholder="Search contacts..." />
+			<h4 class="strong">Room List</h4>
 		</div>
 		<div id="contacts">
             <ul id="chat-rooms">
@@ -25,14 +28,18 @@
         <div id="room-id" data-room-id="<%= @room.try(:id) %>"></div>
         <div id="user-id" data-user-id="<%= current_user.id %>"></div>
 		<div class="contact-profile">
-			<img src="https://www.gravatar.com/avatar/<%=@room.try(:id)%>?s=32&d=identicon&r=PG&f=1" alt="" />
+			<%=get_random_image(@room)%>
 			<p><%=@room.try(:name)%></p>
 		</div>
 		<div class="messages">
             <ul>
                  <div id="chat-messages">
-                    <% @messages.each do |message|%>
-                        <%=render 'messages/message', message: message%>
+                    <% @messages.present? && @messages.each do |message|%>
+						<%if message.user == current_user %>
+                        	<%=render 'messages/recieved', message: message%>
+						<%else%>
+							 <%=render 'messages/send', message: message %>
+						<%end%>
                     <%end%>
                 </div>
 
@@ -40,8 +47,34 @@
 		</div>
 		<div class="message-input">
 			<div class="wrap">
-                  <%= render 'messages/form', message: Message.new, room: @room %>
+				  <%if @room.present?%>
+	                  <%= render 'messages/form', message: Message.new, room: @room %>
+                    <%end%>
 			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+.away{
+	float: left;
+    background-color: grey;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.online {
+    float: left;
+    background-color: green;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.offline {
+    float: left;
+    background-color: red;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+</style>
